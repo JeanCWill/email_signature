@@ -22,10 +22,6 @@ function redrawSignature(name, phone, email) {
 
 }
 
-function saveFile() {
-  window.open(document.querySelector('canvas').toDataURL());
-}
-
 function loadModel(name, phone, email) {
   var canvas = document.querySelector('canvas');
   var ctx = canvas.getContext("2d");
