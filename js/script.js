@@ -4,25 +4,25 @@ function textChangeListener(evt) {
 
   if (id == "name") {
     window.name = text;
+  } else if (id == "office") {
+    window.office = text;
   } else if (id == "phone") {
     window.phone = text;
   } else {
     window.email = text + "@softfocus.com.br";
   }
 
-  loadModel(window.name, window.phone, window.email);
+  loadModel(window.name, window.office, window.phone, window.email);
 }
 
-function redrawSignature(name, phone, email) {
+function redrawSignature(name, office, phone, email) {
   var canvas = document.querySelector('canvas');
   var ctx = canvas.getContext("2d");
 
   ctx.drawImage('model.png', 0, 0, canvas.width, canvas.height);
-
-
 }
 
-function loadModel(name, phone, email) {
+function loadModel(name, office, phone, email) {
   var canvas = document.querySelector('canvas');
   var ctx = canvas.getContext("2d");
 
@@ -31,18 +31,21 @@ function loadModel(name, phone, email) {
   image.onload = function() {
     ctx.drawImage(image, 0, 0);
 
-    ctx.font = '17px Montserrat';
-    ctx.fillStyle = 'black';
-    ctx.strokeStyle = 'black';
+    ctx.font = '16px Montserrat';
+    ctx.fillStyle = '#0091D2';
     ctx.lineWidth = '3';
 
     if (name != null) {
-      ctx.fillText(name, 200, 40);
+      ctx.fillText(name, 200, 30);
     }
 
-    ctx.font = '14px Montserrat';
+    ctx.fillStyle = '#666666';
+    ctx.font = '13px Montserrat';
+    if (office != null) {
+      ctx.fillText(office, 200, 45);
+    }
     if (phone != null) {
-      ctx.fillText(phone, 200, 80);
+      ctx.fillText(phone, 200, 85);
     }
     if (email != null) {
       ctx.fillText(email, 200, 100);
@@ -53,17 +56,10 @@ function loadModel(name, phone, email) {
 }
 
 window.name = "";
+window.office = "";
 window.email = "";
 window.phone = "";
 
-var inputName = $('#name');
-var inputPhone = $('#phone');
-var inputEmail = $('#email');
-inputName.oninput = textChangeListener;
-inputPhone.oninput = textChangeListener;
-inputEmail.oninput = textChangeListener;
-
-//$('#button').addEventListener('click', saveFile, false);
 loadModel();
 
 $(document).ready(function() {
