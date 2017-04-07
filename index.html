@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Gerador de Assinaturas Softfocus</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+        <script src="js/jquery.mask.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="inputs">
+                <span class="label">Nome:</span><br/>
+                <input id="name" type="text" oninput="textChangeListener(event);"><br/>
+
+                <span class="label">Telefone:</span><br/>
+                <input id="phone" type="text" oninput="textChangeListener(event);"><br/>
+
+                <span class="label">E-mail:</span><br/>
+                <input id="email" type="email" oninput="textChangeListener(event);"><span>@softfocus.com.br</span><br/>
+            </div>
+            <canvas width="585" height="140"></canvas><br/>
+        </div>
+        <script src="js/script.js" charset="utf-8"></script>
+    </body>
+</html>
