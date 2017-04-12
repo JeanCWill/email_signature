@@ -1,3 +1,13 @@
+var config = {
+  apiKey: "AIzaSyAOEIuRDyJkmjM-b3mso_ezLvr-N0swDR0",
+  authDomain: "email-signature-52eac.firebaseapp.com",
+  databaseURL: "https://email-signature-52eac.firebaseio.com",
+  projectId: "email-signature-52eac",
+  storageBucket: "email-signature-52eac.appspot.com",
+  messagingSenderId: "663635393168"
+};
+firebase.initializeApp(config);
+
 function textChangeListener(evt) {
   var id = evt.target.id;
   var text = evt.target.value;
@@ -27,6 +37,7 @@ function loadModel(name, office, phone, email) {
   var ctx = canvas.getContext("2d");
 
   var image = new Image();
+  image.crossOrigin = "anonymous";
 
   image.onload = function() {
     ctx.drawImage(image, 0, 0);
@@ -52,7 +63,116 @@ function loadModel(name, office, phone, email) {
     }
   }
 
-  image.src = 'image/model.png';
+  image.src = 'https://raw.githubusercontent.com/softfocusbr/email_signature/master/image/model.png';
+}
+
+function showLoginFirebase() {
+  $("#login").show();
+}
+
+function hideLoginFirebase() {
+  $("#login").hide();
+}
+
+function loginFirebase() {
+  firebase.auth().signInWithEmailAndPassword($("#emailFirebase").val(), $("#passwordFirebase").val()).then(function(user) {
+    hideLoginFirebase();
+    sendImageToFirebase();
+  }).catch(function(error) {
+    console.log(error);
+    $("#error").html("<strong>Erro!</strong> Falha ao autenticar usuário.");
+    $("#error").show();
+  });
+}
+
+function sendImageToFirebase() {
+  var canvas = document.querySelector('canvas');
+  var fileName = window.email;
+
+  console.log(fileName);
+
+  var storageRef = firebase.storage().ref();
+  var mountainsRef = storageRef.child(fileName + '.jpg');
+  var mountainImagesRef = storageRef.child('images/' + fileName + '.jpg');
+
+  $("#loading").show();
+
+  if (canvas.toBlob) {
+    canvas.toBlob(
+      function(blob) {
+        var uploadTask = storageRef.child('images/' + fileName).put(blob);
+
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          function(snapshot) {
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Publicação a ' + progress + '% done');
+
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED:
+                console.log('Publicação pausada.');
+                break;
+              case firebase.storage.TaskState.RUNNING:
+                console.log('Publicando!!!');
+                break;
+            }
+          }, function(error) {
+            console.log(error);
+            alert("Erro ao publicar imagem.")
+          }, function() {
+            var downloadURL = uploadTask.snapshot.downloadURL;
+            createTextAreaUrl(downloadURL);
+            $("#loading").hide();
+            $("#success").html("<strong>Sucesso!</strong> Imagem enviada para o Firebase.");
+            $("#success").show();
+          });
+      },
+      'image/jpeg'
+    );
+  }
+}
+
+function hideAlert() {
+  $("#success").hide();
+  $("#error").hide();
+}
+
+function createTextAreaUrl(url) {
+  var textArea = document.createElement("textarea");
+  textArea.style.position = 'fixed';
+  textArea.style.top = 0;
+  textArea.style.left = 0;
+  textArea.style.width = '0.1em';
+  textArea.style.height = '0.1em';
+  textArea.style.padding = 0;
+  textArea.style.border = 'none';
+  textArea.style.outline = 'none';
+  textArea.style.boxShadow = 'none';
+  textArea.style.background = 'transparent';
+  textArea.value = url;
+
+  document.body.appendChild(textArea);
+}
+
+function copyUrlToClipboard() {
+  var textArea = document.querySelector("textarea");
+  textArea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+
+    if (successful) {
+      $("#success").html("<strong>Sucesso!</strong> Endereço da imagem copiado.");
+      $("#success").show();
+    } else {
+      $("#error").html("<strong>Erro!</strong> Falha ao copiar a imagem.");
+      $("#error").show();
+    }
+  } catch (err) {
+    console.log(err);
+    $("#error").html("<strong>Erro!</strong> Falha ao copiar a imagem.");
+    $("#error").show();
+  }
+  document.body.removeChild(textArea);
 }
 
 window.name = "";

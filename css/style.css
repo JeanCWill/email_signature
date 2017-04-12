@@ -15,6 +15,50 @@ body {
     font-weight: bold;
 }
 
+#loading, #login {
+  position: fixed;
+  width: 630px;
+  height: 480px;
+  display: none;
+  background-color: rgba(74, 72, 72, 0.15);
+  border-radius: 4px;
+}
+
+#login .inputs {
+  margin-top: 20%;
+  background-color: white;
+  padding: 15px;
+  width: 330px;
+  margin-left: 120px;
+  border-radius: 4px;
+}
+
+#loading img {
+  height: 190px;
+  margin-top: 20%;
+  margin-left: 35%;
+}
+
+.alert {
+  display: none;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
 .main {
     width: 630px;
     height: 100%;
@@ -26,7 +70,7 @@ body {
     background-color: white;
 }
 
-.inputs {
+.main .inputs {
     width: 500px;
     margin-left: auto;
     margin-left: auto;
@@ -54,4 +98,35 @@ input:last-of-type {
 canvas {
     margin-left: 8px;
     margin-bottom: 15px;
+}
+
+.button {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #0091D2;
+  border-color: #0091D2;
+}
+
+.close {
+    color: #0091D2;
+    background-color: #fff;
+    border-color: #0091D2;
 }

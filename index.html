@@ -4,6 +4,9 @@
     <head>
         <title>Gerador de Assinaturas Softfocus</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta charset="UTF-8">
+        <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.7.0/js/canvas-to-blob.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
         <script src="js/jquery.mask.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -12,6 +15,22 @@
 
     <body>
         <div class="main">
+            <div id="loading">
+                <img src="image\loading.gif" alt="Loading">
+            </div>
+            <div id="login">
+                <div class="inputs">
+                    <span class="label">Email:</span><br/>
+                    <input id="emailFirebase" type="text"><br/>
+
+                    <span class="label">Senha:</span><br/>
+                    <input id="passwordFirebase" type="password"><br/>
+                    <button type="button" class="button" onclick="loginFirebase();">Login</button>
+                    <button type="button" class="button close" onclick="hideLoginFirebase();">Fechar</button>
+                </div>
+            </div>
+            <div class="alert alert-success" id="success" onclick="hideAlert();"></div>
+            <div class="alert alert-error" id="error" onclick="hideAlert();"></div>
             <div class="inputs">
                 <span class="label">Nome:</span><br/>
                 <input id="name" type="text" oninput="textChangeListener(event);"><br/>
@@ -22,10 +41,12 @@
                 <span class="label">Telefone:</span><br/>
                 <input id="phone" type="text" oninput="textChangeListener(event);"><br/>
 
-                <span class="label">E-mail:</span><br/>
+                <span class="label">Email:</span><br/>
                 <input id="email" type="email" oninput="textChangeListener(event);"><span>@softfocus.com.br</span><br/>
             </div>
             <canvas width="585" height="140"></canvas><br/>
+            <button type="button" class="button" onclick="showLoginFirebase();">Enviar para o Firebase</button>
+            <button type="button" class="button" onclick="copyUrlToClipboard();">Copiar endereço da imagem</button>
         </div>
         <script src="js/script.js" charset="utf-8"></script>
     </body>
