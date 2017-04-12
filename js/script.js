@@ -85,6 +85,10 @@ function loginFirebase() {
   });
 }
 
+function logoffFirebase() {
+  firebase.auth().signOut().then(function() {}, function(error) {});
+}
+
 function sendImageToFirebase() {
   var canvas = document.querySelector('canvas');
   var fileName = window.email;
@@ -124,6 +128,7 @@ function sendImageToFirebase() {
             $("#loading").hide();
             $("#success").html("<strong>Sucesso!</strong> Imagem enviada para o Firebase.");
             $("#success").show();
+            logoffFirebase();
           });
       },
       'image/jpeg'
